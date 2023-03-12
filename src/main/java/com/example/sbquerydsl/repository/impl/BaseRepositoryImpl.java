@@ -2,6 +2,7 @@ package com.example.sbquerydsl.repository.impl;
 
 import com.example.sbquerydsl.entity.QAuthor;
 import com.example.sbquerydsl.entity.QBook;
+import com.example.sbquerydsl.entity.QMember;
 import com.example.sbquerydsl.repository.BaseRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -14,6 +15,7 @@ public abstract class BaseRepositoryImpl<T, ID> extends SimpleJpaRepository<T, I
 
     protected final QAuthor author = QAuthor.author;
     protected final QBook book = QBook.book;
+    protected final QMember member = QMember.member;
 
     public BaseRepositoryImpl(Class<T> domainClass, EntityManager em) {
         super(domainClass, em);

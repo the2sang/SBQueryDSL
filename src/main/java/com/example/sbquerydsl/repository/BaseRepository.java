@@ -1,5 +1,7 @@
 package com.example.sbquerydsl.repository;
 
+import com.example.sbquerydsl.entity.Member;
+import jakarta.persistence.EntityManager;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
