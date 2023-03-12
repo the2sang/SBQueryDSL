@@ -1,15 +1,21 @@
+buildscript {
+    configurations['classpath'].resolutionStrategy.eachDependency {
+        if (requested.group == 'org.jooq') {
+            useVersion '3.18.0'
+        }
+    }
+}
+
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.0.4'
     id 'io.spring.dependency-management' version '1.1.0'
     id 'org.jetbrains.kotlin.jvm' version '1.8.10'
+    id 'nu.studer.jooq' version '8.1'
 }
 
-dependencyManagement {
-    imports {
-        mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
-    }
-}
+
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -27,6 +33,7 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-jooq'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.projectlombok:lombok:1.18.22'
     compileOnly 'org.projectlombok:lombok'
@@ -53,15 +60,88 @@ dependencies {
 
     // === QueryDsl 끝 ===
 
+    //JOOQ - GenerationTool Dependency
+    // https://mvnrepository.com/artifact/org.jooq/jooq-codegen-maven
+    implementation 'org.jooq:jooq-codegen-maven:3.18.0'
+    // https://mvnrepository.com/artifact/org.jooq/jooq-meta
+    implementation 'org.jooq:jooq-meta:3.18.0'
+
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'org.postgresql:postgresql'
+    implementation 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    jooqGenerator 'org.postgresql:postgresql:42.5.1'
+
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+
+
+
+//JooqApplication.init() 참고
+import org.jooq.meta.jaxb.Logging
+
+jooq {
+    version = '3.18.0'  // default (can be omitted)
+    //edition = nu.studer.gradle.jooq.JooqEdition.OSS  // default (can be omitted)
+
+    configurations {
+        main {  // name of the jOOQ configuration
+            //generateSchemaSourceOnCompilation = true  // default (can be omitted)
+
+            generationTool {
+                logging = Logging.WARN
+                jdbc {
+                    driver = 'org.postgresql.Driver'
+                    url = 'jdbc:postgresql://localhost:5432/test_db'
+                    user = 'root'
+                    password = 'root'
+//                    properties {
+//                        property {
+//                            key = 'ssl'
+//                            value = 'true'
+//                        }
+//                    }
+                }
+                generator {
+                    name = 'org.jooq.codegen.DefaultGenerator'
+                    database {
+                        name = 'org.jooq.meta.postgres.PostgresDatabase'
+                        inputSchema = 'public'
+                        forcedTypes {
+                            forcedType {
+                                name = 'varchar'
+                                includeExpression = '.*'
+                                includeTypes = 'JSONB?'
+                            }
+                            forcedType {
+                                name = 'varchar'
+                                includeExpression = '.*'
+                                includeTypes = 'INET'
+                            }
+                        }
+                    }
+                    generate {
+                        deprecated = false
+                        records = true
+                        immutablePojos = true
+                        fluentSetters = true
+                    }
+                    target {
+                        packageName = 'nu.studer.sample'
+                        directory = 'build/generated/sources/annotationProcessor/java/main'  // default (can be omitted)
+                    }
+                    strategy.name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+                }
+            }
+        }
+    }
 }
 
 
