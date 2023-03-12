@@ -89,11 +89,11 @@ import org.jooq.meta.jaxb.Logging
 
 jooq {
     version = '3.18.0'  // default (can be omitted)
-    //edition = nu.studer.gradle.jooq.JooqEdition.OSS  // default (can be omitted)
+    edition = nu.studer.gradle.jooq.JooqEdition.OSS  // default (can be omitted)
 
     configurations {
         main {  // name of the jOOQ configuration
-            //generateSchemaSourceOnCompilation = true  // default (can be omitted)
+            generateSchemaSourceOnCompilation = true  // default (can be omitted)
 
             generationTool {
                 logging = Logging.WARN
@@ -102,12 +102,12 @@ jooq {
                     url = 'jdbc:postgresql://localhost:5432/test_db'
                     user = 'root'
                     password = 'root'
-//                    properties {
-//                        property {
-//                            key = 'ssl'
-//                            value = 'true'
-//                        }
-//                    }
+                    properties {
+                        property {
+                            key = 'ssl'
+                            value = 'false'
+                        }
+                    }
                 }
                 generator {
                     name = 'org.jooq.codegen.DefaultGenerator'
