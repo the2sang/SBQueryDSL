@@ -11,10 +11,16 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "Account")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SequenceGenerator(
+        name = "ACCOUNT_SEQ_GENERATOR",
+        sequenceName = "ACCOUNT_SETTINGS_SEQ", // 시퀸스 명
+        initialValue = 1, // 초기 값
+        allocationSize = 50 // 미리 할당 받을 시퀸스 수
+)
 public class AccountEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ACCOUNT_SEQ_GENERATOR")
     private Long id;
 
     @Column(name = "username", nullable = false, unique = true)

@@ -1,25 +1,25 @@
 package com.example.sbquerydsl.jooq.article.persistence;
 
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
 @Getter
 @Entity
 @Table(name = "Article")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SequenceGenerator(
+        name = "ARTICLE_SEQ_GENERATOR",
+        sequenceName = "ARTICLE_SETTINGS_SEQ", // 시퀸스 명
+        initialValue = 1, // 초기 값
+        allocationSize = 50 // 미리 할당 받을 시퀸스 수
+)
 public class ArticleEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARTICLE_SEQ_GENERATOR")
     private Long id;
 
     @Column(name = "title", nullable = false)

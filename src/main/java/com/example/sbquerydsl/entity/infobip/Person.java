@@ -8,10 +8,16 @@ import lombok.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@SequenceGenerator(
+        name = "PERSON_SEQ_GENERATOR",
+        sequenceName = "PERSON_SEQ", // 시퀸스 명
+        initialValue = 1, // 초기 값
+        allocationSize = 50 // 미리 할당 받을 시퀸스 수
+)
 public class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PERSON_SEQ_GENERATOR")
     @Column
     private Long id;
 
