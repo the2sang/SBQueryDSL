@@ -32,7 +32,7 @@ public class AccountService {
         return accountWriteRepository.save(account.toEntity());
     }
 
-    @Transactional
+
     public AccountEntity findOne(String username) {
         final AccountEntity targetAccount = accountReadRepository.findByUsername(username);
         Assert.notNull(targetAccount, format("account is not Found || username = %s || dateTime = %s", username, LocalDateTime.now()));
