@@ -38,4 +38,8 @@ public class AccountService {
         Assert.notNull(targetAccount, format("account is not Found || username = %s || dateTime = %s", username, LocalDateTime.now()));
         return targetAccount;
     }
+
+    public String fetchAccountPageAndMetadata(int limit, int offset) {
+        return accountReadRepository.fetchAccountPageAndMetadata(limit, offset);
+    }
 }

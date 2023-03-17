@@ -24,4 +24,9 @@ public class AccountController {
     public AccountEntity findAccount(@PathVariable String name) {
         return accountService.findOne(name);
     }
+
+    @GetMapping("/account/page")
+    public String fetchAccountPageAndMetadata(@RequestParam int limit, @RequestParam int offset) {
+        return accountService.fetchAccountPageAndMetadata(limit, offset);
+    }
 }

@@ -2,8 +2,11 @@ package com.example.sbquerydsl.jooq.account.persistent;
 
 import lombok.RequiredArgsConstructor;
 import nu.studer.sample.tables.Account;
-import org.jooq.DSLContext;
+import org.jooq.*;
 import org.springframework.stereotype.Repository;
+
+import static nu.studer.sample.Tables.ACCOUNT;
+import static org.jooq.impl.DSL.*;
 
 
 @Repository
@@ -41,5 +44,44 @@ public class AccountReadRepository {
                 .from(account)
                 .where(account.USERNAME.eq(username))
                 .fetchOneInto(AccountEntity.class);
+    }
+
+    public String fetchAccountPageAndMetadata(int limit, int offset) {
+        return paginate(
+                dsl, dsl.select(ACCOUNT.ID, ACCOUNT.USERNAME, ACCOUNT.EMAIL, ACCOUNT.ROLES ).from(ACCOUNT),
+                new Field[]{ACCOUNT.ID}, limit, offset
+        ).fetch().formatJSON(JSONFormat.DEFAULT_FOR_RECORDS);
+    }
+
+    private Select<?> paginate(DSLContext ctx, Select<?> original, Field<?>[] sort, int limit, int offset) {
+
+        Table<?> u = original.asTable("u");
+        Field<Integer> totalRows = count().over().as("total_rows");
+        Field<Integer> row = rowNumber().over().orderBy(u.fields(sort))
+                .as("row");
+
+        Table<?> t = ctx
+                .select(u.asterisk())
+                .select(totalRows, row)
+                .from(u)
+                .orderBy(u.fields(sort))
+                .limit(limit)
+                .offset(offset)
+                .asTable("t");
+
+        Select<?> result = ctx
+                .select(t.fields(original.getSelect().toArray(Field[]::new)))
+                .select(
+                        count().over().as("actual_page_size"),
+                        field(max(t.field(row)).over().eq(t.field(totalRows)))
+                                .as("last_page"),
+                        t.field(totalRows),
+                        t.field(row),
+                        t.field(row).minus(inline(1)).div(limit).plus(inline(1))
+                                .as("current_page"))
+                .from(t)
+                .orderBy(t.fields(sort));
+
+        return result;
     }
 }
