@@ -15,6 +15,8 @@ import org.springframework.util.Assert;
 import com.example.sbquerydsl.jooq.account.model.Account;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
@@ -41,5 +43,9 @@ public class AccountService {
 
     public String fetchAccountPageAndMetadata(int limit, int offset) {
         return accountReadRepository.fetchAccountPageAndMetadata(limit, offset);
+    }
+
+    public List<AccountEntity> saveAccounts(List<Account> accounts) {
+       return accountWriteRepository.saveAll(accounts.stream().map(Account::toEntity ).collect(Collectors.toList()));
     }
 }

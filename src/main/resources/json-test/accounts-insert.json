@@ -1,0 +1,68 @@
+[
+  {
+    "password":"test1",
+    "username" : "test1",
+    "email": "the2sang1@gmail.com",
+    "role": "admin"
+  },
+  {
+    "password":"test2",
+    "username" : "test2",
+    "email": "the2sang2@gmail.com",
+    "role": "admin"
+  },
+  {
+    "password":"test3",
+    "username" : "test3",
+    "email": "the2sang3@gmail.com",
+    "role": "admin"
+  },
+  {
+    "password":"test4",
+    "username" : "test4",
+    "email": "the2sang4@gmail.com",
+    "role": "admin"
+  },
+  {
+    "password":"test5",
+    "username" : "test5",
+    "email": "the2sang5@gmail.com",
+    "role": "admin"
+  },
+  {
+    "password":"test6",
+    "username" : "test6",
+    "email": "the2sang6@gmail.com",
+    "role": "admin"
+  },
+  {
+    "password":"test7",
+    "username" : "test7",
+    "email": "the2sang7@gmail.com",
+    "role": "admin"
+  },
+  {
+    "password":"test8",
+    "username" : "test8",
+    "email": "the2sang8@gmail.com",
+    "role": "admin"
+  },
+  {
+    "password":"test9",
+    "username" : "test9",
+    "email": "the2sang9@gmail.com",
+    "role": "admin"
+  },
+  {
+    "password":"test10",
+    "username" : "test10",
+    "email": "the2sang10@gmail.com",
+    "role": "admin"
+  },
+  {
+    "password":"test11",
+    "username" : "test11",
+    "email": "the2sang11@gmail.com",
+    "role": "admin"
+  }
+]

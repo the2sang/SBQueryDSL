@@ -1,0 +1,1 @@
+alter table account add column address varchar(100) null;

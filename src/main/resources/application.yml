@@ -20,10 +20,10 @@ spring:
         open-in-view: false
         generate-ddl: true
     flyway:
-        enabled: false
+        enabled: true
         baseline-on-migrate: true
         locations: classpath:/db/migration
-        baseline-version: 1
+        baseline-version: 2
         url: jdbc:postgresql://localhost:5432/postgres
         user: postgres
         password: postgres

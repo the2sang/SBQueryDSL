@@ -7,6 +7,8 @@ import com.example.sbquerydsl.jooq.account.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/rest")
 public class AccountController {
@@ -18,6 +20,11 @@ public class AccountController {
     @PostMapping("/account/new")
     public AccountEntity saveAccount( @RequestBody Account account) {
         return accountService.save(account);
+    }
+
+    @PostMapping("/accounts/all")
+    public List<AccountEntity> saveAccounts(@RequestBody List<Account> accounts) {
+        return accountService.saveAccounts(accounts);
     }
 
     @GetMapping("/account/{name}")

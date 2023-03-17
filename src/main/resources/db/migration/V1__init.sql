@@ -1,4 +1,20 @@
-create table public.account
+-- drop table account;
+-- drop table article;
+-- drop table author;
+-- drop table book;
+-- drop table person;
+-- drop table member;
+-- drop table team;
+--
+-- drop sequence account_settings_seq;
+-- drop sequence article_settings_seq;
+-- drop sequence author_settings_seq;
+-- drop sequence book_settings_seq;
+-- drop sequence member_settings_seq;
+-- drop sequence person_seq;
+-- drop sequence team_settings_seq;
+
+create table account
 (
     id       bigint       not null
         primary key,
@@ -12,10 +28,10 @@ create table public.account
             unique
 );
 
-alter table public.account
+alter table account
     owner to postgres;
 
-create table public.article
+create table article
 (
     id          bigint       not null
         primary key,
@@ -24,10 +40,10 @@ create table public.article
     title       varchar(50) not null
 );
 
-alter table public.article
+alter table article
     owner to postgres;
 
-create table public.author
+create table author
 (
     author_id integer not null
         primary key,
@@ -35,10 +51,10 @@ create table public.author
     name      varchar(50)
 );
 
-alter table public.author
+alter table author
     owner to postgres;
 
-create table public.book
+create table book
 (
     book_id   integer not null
         primary key,
@@ -46,13 +62,13 @@ create table public.book
     name      varchar(100),
     author_id integer
         constraint fk_author
-            references public.author
+            references author
 );
 
-alter table public.book
+alter table book
     owner to postgres;
 
-create table public.person
+create table person
 (
     id         bigint not null
         primary key,
@@ -60,30 +76,30 @@ create table public.person
     last_name  varchar(20)
 );
 
-alter table public.person
+alter table person
     owner to postgres;
 
-create table public.person_settings
+create table person_settings
 (
     id        bigint not null
         primary key,
     person_id bigint
 );
 
-alter table public.person_settings
+alter table person_settings
     owner to postgres;
 
-create table public.team
+create table team
 (
     id   bigint not null
         primary key,
     name varchar(50)
 );
 
-alter table public.team
+alter table team
     owner to postgres;
 
-create table public.member
+create table member
 (
     member_id bigint  not null
         primary key,
@@ -91,49 +107,50 @@ create table public.member
     username  varchar(20),
     team_id   bigint
         constraint fk_team
-            references public.team
+            references team
 );
 
-alter table public.member
+alter table member
     owner to postgres;
 
 --generate sequence
-create sequence public.account_settings_seq
+create sequence account_settings_seq
     increment by 50;
 
-alter sequence public.account_settings_seq owner to postgres;
+alter sequence account_settings_seq owner to postgres;
 
-create sequence public.article_settings_seq
+create sequence article_settings_seq
     increment by 50;
 
-alter sequence public.article_settings_seq owner to postgres;
+alter sequence article_settings_seq owner to postgres;
 
-create sequence public.author_settings_seq
+create sequence author_settings_seq
     increment by 50;
 
-alter sequence public.author_settings_seq owner to postgres;
+alter sequence author_settings_seq owner to postgres;
 
-create sequence public.book_settings_seq
+create sequence book_settings_seq
     increment by 50;
 
-alter sequence public.book_settings_seq owner to postgres;
+alter sequence book_settings_seq owner to postgres;
 
-create sequence public.member_settings_seq
+create sequence member_settings_seq
     increment by 50;
 
-alter sequence public.member_settings_seq owner to postgres;
+alter sequence member_settings_seq owner to postgres;
 
-create sequence public.person_seq
+create sequence person_seq
     increment by 50;
 
-alter sequence public.person_seq owner to postgres;
+alter sequence person_seq owner to postgres;
 
-create sequence public.person_settings_seq
+create sequence person_settings_seq
     increment by 50;
 
-alter sequence public.person_settings_seq owner to postgres;
+alter sequence person_settings_seq owner to postgres;
 
-create sequence public.team_settings_seq
+create sequence team_settings_seq
     increment by 50;
 
-alter sequence public.team_settings_seq owner to postgres;
+alter sequence team_settings_seq owner to postgres;
+alter sequence team_settings_seq owner to postgres;
